@@ -1,6 +1,7 @@
 package com.udemy.spring5framework.model;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -12,7 +13,9 @@ public class Book {
     private Long id;
     private String isbn;
     private String title;
-    private String publisher;
+
+    @OneToOne
+    private Publisher publisher;
 
     @ManyToMany
     @JoinTable(
@@ -24,7 +27,15 @@ public class Book {
     public Book() {
     }
 
-    public Book(Long id, String isbn, String title, String publisher, Set<Author> authors) {
+    public Book(String title, Publisher publisher) {
+        this.id = null;
+        this.isbn = "-";
+        this.title = title;
+        this.publisher = publisher;
+        this.authors = new HashSet<>();
+    }
+
+    public Book(Long id, String isbn, String title, Publisher publisher, Set<Author> authors) {
         this.id = id;
         this.isbn = isbn;
         this.title = title;
@@ -56,11 +67,11 @@ public class Book {
         this.title = title;
     }
 
-    public String getPublisher() {
+    public Publisher getPublisher() {
         return publisher;
     }
 
-    public void setPublisher(String publisher) {
+    public void setPublisher(Publisher publisher) {
         this.publisher = publisher;
     }
 
